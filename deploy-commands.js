@@ -8,7 +8,6 @@ require('dotenv').config();
 const { DISCORD_TOKEN, CLIENT_ID, GUILD_ID } = process.env;
 
 const commands = [];
-// ... (le reste du code pour charger les commandes ne change pas) ...
 const foldersPath = path.join(__dirname, 'src', 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
 
@@ -23,7 +22,6 @@ for (const folder of commandFolders) {
         }
     }
 }
-// ... (fin de la partie qui ne change pas) ...
 
 
 const rest = new REST().setToken(DISCORD_TOKEN);
@@ -32,11 +30,9 @@ const rest = new REST().setToken(DISCORD_TOKEN);
     try {
         let route;
         if (GUILD_ID) {
-            // Déploiement sur le serveur de test (instantané)
             console.log(`Déploiement de ${commands.length} commandes sur le serveur de test...`);
             route = Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID);
         } else {
-            // Déploiement global (production, peut prendre jusqu'à 1h)
             console.log(`Déploiement de ${commands.length} commandes en global...`);
             route = Routes.applicationCommands(CLIENT_ID);
         }

@@ -1,9 +1,6 @@
-// src/utils/ai-moderator.js (Version finale avec toutes les fonctions IA)
-
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 require('dotenv').config();
 
-// On vérifie si la clé API est présente avant d'initialiser
 let model;
 if (process.env.GEMINI_API_KEY) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -11,9 +8,6 @@ if (process.env.GEMINI_API_KEY) {
 } else {
     console.warn("Clé API Gemini non configurée. Les modules IA seront désactivés.");
 }
-
-
-// --- FONCTION 1 : DÉTECTION DE MESSAGES TOXIQUES ---
 
 const toxicMessagePrompt = `
 Tu es un expert en modération pour une communauté Discord francophone tout public. 
@@ -25,7 +19,7 @@ Message à analyser :
 `;
 
 async function isMessageToxic(messageContent) {
-    if (!model) return false; // Si l'IA n'est pas initialisée, on ne fait rien
+    if (!model) return false;
 
     try {
         const fullPrompt = toxicMessagePrompt + messageContent;
@@ -37,13 +31,10 @@ async function isMessageToxic(messageContent) {
 
     } catch (error) {
         console.error("Erreur lors de l'appel à l'API Gemini (isMessageToxic):", error);
-        // En cas d'erreur de l'API, on ne bloque pas le message par sécurité
         return false;
     }
 }
 
-
-// --- FONCTION 2 : GÉNÉRATION DE CONSEILS DE SÉCURITÉ ---
 
 async function getSecurityAdvice(vulnerabilities) {
     if (!model) return "Le module IA n'est pas configuré. Impossible de générer des conseils.";
@@ -68,6 +59,4 @@ async function getSecurityAdvice(vulnerabilities) {
     }
 }
 
-
-// On exporte les deux fonctions pour pouvoir les utiliser ailleurs
 module.exports = { isMessageToxic, getSecurityAdvice };

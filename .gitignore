@@ -1,0 +1,17 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Fichiers système
+.DS_Store
+
+# Dépendances
+node_modules
+
+# Fichiers de configuration locaux
+.env
+
+# Base de données locale
+*.db
+*.db-journal

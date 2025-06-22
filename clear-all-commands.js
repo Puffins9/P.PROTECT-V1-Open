@@ -16,15 +16,12 @@ async function clearCommands() {
     try {
         console.log('Début de la suppression de toutes les commandes...');
 
-        // Promesse pour effacer les commandes de guilde (serveur de test)
         const clearGuild = rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), { body: [] })
             .then(() => console.log('✅ Commandes de Guilde effacées avec succès.'));
 
-        // Promesse pour effacer les commandes globales
         const clearGlobal = rest.put(Routes.applicationCommands(CLIENT_ID), { body: [] })
             .then(() => console.log('✅ Commandes Globales effacées avec succès.'));
 
-        // On exécute les deux en parallèle
         await Promise.all([clearGuild, clearGlobal]);
 
         console.log('Nettoyage complet terminé.');

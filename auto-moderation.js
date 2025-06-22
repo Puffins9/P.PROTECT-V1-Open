@@ -12,7 +12,6 @@ module.exports = {
     async execute(interaction) {
         await interaction.deferReply({ ephemeral: true });
 
-        // On récupère ou crée la configuration du serveur depuis la DB
         const guildConfig = await prisma.guild.upsert({
             where: { guildId: interaction.guild.id },
             update: {},
@@ -46,7 +45,7 @@ module.exports = {
                     .setCustomId('automod_toggle_antispam')
                     .setLabel('Anti-Spam')
                     .setStyle(guildConfig.antiSpam ? ButtonStyle.Success : ButtonStyle.Danger)
-                    .setDisabled(true), // On le laisse désactivé pour l'instant
+                    .setDisabled(true),
             );
 
         await interaction.editReply({ embeds: [embed], components: [buttons] });

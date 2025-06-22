@@ -1,6 +1,5 @@
-// src/commands/moderation/clear.js (Version Finale - Syntaxiquement Parfaite)
+// src/commands/moderation/clear.js
 
-// On ajoute MessageFlags à notre liste d'imports depuis discord.js
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
@@ -17,15 +16,11 @@ module.exports = {
     async execute(interaction) {
         const amountToDelete = interaction.options.getInteger('nombre');
 
-        // ---- LA CORRECTION EST ICI ----
-        // Ancienne méthode : await interaction.deferReply({ ephemeral: true });
-        // Nouvelle méthode :
         await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-        // Le reste du code ne change pas, car la logique est déjà parfaite.
         if (!interaction.channel.permissionsFor(interaction.client.user).has(PermissionFlagsBits.ManageMessages)) {
             const embedError = new EmbedBuilder()
-                .setColor('#E74C3C') // Rouge
+                .setColor('#E74C3C')
                 .setTitle('❌ Erreur de Permission')
                 .setDescription('Je n\'ai pas la permission `Gérer les messages` dans ce salon pour exécuter cette commande.');
             
